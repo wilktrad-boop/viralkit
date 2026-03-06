@@ -1,0 +1,25 @@
+---
+interface Item {
+  q: string;
+  a: string;
+}
+interface Props {
+  items?: Item[];
+}
+const { items = [] } = Astro.props;
+---
+<div class="not-prose my-6 space-y-3">
+  {items.map((item) => (
+    <details class="group rounded-xl border border-slate-200 bg-white overflow-hidden">
+      <summary class="flex cursor-pointer items-center justify-between px-5 py-4 font-semibold text-slate-900 text-sm select-none list-none">
+        <span>{item.q}</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0 text-slate-400 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </summary>
+      <div class="px-5 pb-4 text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+        {item.a}
+      </div>
+    </details>
+  ))}
+</div>

@@ -1,0 +1,77 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  slug: string;
+  category: string;
+  type: string;
+  date: string;
+  readingTime: number;
+}
+
+const { title, description, slug, category, type, date, readingTime } = Astro.props;
+
+const isNew = (Date.now() - new Date(date).getTime()) < 30 * 24 * 60 * 60 * 1000;
+
+const typeStyles: Record<string, { badge: string; border: string; hover: string }> = {
+  avis: {
+    badge: 'bg-violet-50 text-violet-700',
+    border: 'hover:border-violet-200',
+    hover: 'group-hover:text-violet-700',
+  },
+  comparatif: {
+    badge: 'bg-pink-50 text-pink-700',
+    border: 'hover:border-pink-200',
+    hover: 'group-hover:text-pink-700',
+  },
+  guide: {
+    badge: 'bg-sky-50 text-sky-700',
+    border: 'hover:border-sky-200',
+    hover: 'group-hover:text-sky-700',
+  },
+};
+
+const categoryLabels: Record<string, string> = {
+  planification: 'Planification',
+  creation: 'Création & édition',
+  analytics: 'Analytics',
+  'seo-youtube': 'SEO YouTube',
+  croissance: 'Croissance',
+  automatisation: 'Automatisation',
+};
+
+const style = typeStyles[type] ?? {
+  badge: 'bg-slate-100 text-slate-700',
+  border: 'hover:border-slate-300',
+  hover: 'group-hover:text-violet-600',
+};
+---
+
+<a
+  href={`/${slug}/`}
+  class={`group rounded-2xl border border-slate-200 bg-white p-6 hover:shadow-lg ${style.border} transition-all block`}
+>
+  <div class="flex items-center gap-2 flex-wrap">
+    <span class={`inline-block text-xs font-semibold uppercase tracking-wide px-2 py-0.5 rounded-md ${style.badge}`}>
+      {type}
+    </span>
+    <span class="inline-block text-xs text-slate-400 px-2 py-0.5 rounded-md bg-slate-50">
+      {categoryLabels[category] ?? category}
+    </span>
+    {isNew && (
+      <span class="inline-block text-xs font-semibold bg-violet-600 text-white px-2 py-0.5 rounded-md">
+        Nouveau
+      </span>
+    )}
+  </div>
+  <h3 class={`mt-3 text-base font-semibold text-slate-900 ${style.hover} transition-colors line-clamp-2`}>
+    {title}
+  </h3>
+  <p class="mt-2 text-sm text-slate-500 line-clamp-3 leading-relaxed">{description}</p>
+  <div class="mt-4 flex items-center justify-between">
+    <span class="text-xs text-slate-400">{readingTime} min de lecture</span>
+    <span class="text-xs font-medium text-violet-600 opacity-0 group-hover:opacity-100 transition-opacity">
+      Lire →
+    </span>
+  </div>
+</a>

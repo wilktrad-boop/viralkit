@@ -1,0 +1,24 @@
+---
+interface Row {
+  spec: string;
+  value: string;
+  note?: string;
+}
+interface Props {
+  data?: Row[];
+}
+const { data = [] } = Astro.props;
+---
+<div class="not-prose my-6 overflow-x-auto rounded-xl border border-slate-200">
+  <table class="w-full text-sm border-collapse">
+    <tbody>
+      {data.map((row, i) => (
+        <tr class={i % 2 === 0 ? 'bg-slate-50' : 'bg-white'}>
+          <td class="py-2.5 px-4 font-medium text-slate-700 border-b border-slate-200 w-2/5">{row.spec}</td>
+          <td class="py-2.5 px-4 text-slate-800 border-b border-slate-200 font-semibold">{row.value}</td>
+          {row.note && <td class="py-2.5 px-4 text-slate-500 border-b border-slate-200 text-xs">{row.note}</td>}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

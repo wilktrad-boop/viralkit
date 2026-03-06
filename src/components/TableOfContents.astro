@@ -1,0 +1,69 @@
+---
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+const filtered = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+{filtered.length > 2 && (
+  <nav aria-label="Sommaire">
+    <p class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">
+      Dans cet article
+    </p>
+    <ul class="space-y-0.5">
+      {filtered.map((h) => (
+        <li>
+          <a
+            href={`#${h.slug}`}
+            data-toc-link={h.slug}
+            class={`toc-link block py-1 text-slate-500 hover:text-violet-600 transition-colors leading-snug ${
+              h.depth === 3 ? 'pl-3 text-xs' : 'text-sm'
+            }`}
+          >
+            {h.text}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<script>
+  const links = document.querySelectorAll<HTMLAnchorElement>('.toc-link');
+  if (links.length > 0) {
+    const targets = Array.from(links)
+      .map((l) => {
+        const id = l.getAttribute('data-toc-link');
+        return id ? document.getElementById(id) : null;
+      })
+      .filter(Boolean) as HTMLElement[];
+
+    const activate = (id: string) => {
+      links.forEach((l) => {
+        const active = l.getAttribute('data-toc-link') === id;
+        l.classList.toggle('text-violet-600', active);
+        l.classList.toggle('font-semibold', active);
+        l.classList.toggle('text-slate-500', !active);
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) activate(entry.target.id);
+        }
+      },
+      { rootMargin: '-10% 0px -75% 0px' }
+    );
+
+    targets.forEach((t) => observer.observe(t));
+  }
+</script>
