@@ -53,6 +53,11 @@
           "type": "boolean",
           "default": false
         },
+        "rating": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10
+        },
         "faqs": {
           "type": "array",
           "items": {

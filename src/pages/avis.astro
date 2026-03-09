@@ -29,6 +29,7 @@ const readingTime = (body: string) => Math.ceil(body.split(/\s+/).length / 200);
             type={article.data.type}
             date={article.data.date}
             readingTime={readingTime(article.body)}
+            rating={article.data.rating}
           />
         ))}
       </div>

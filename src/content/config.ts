@@ -13,6 +13,7 @@ const articles = defineCollection({
     cover: z.string().optional(),
     draft: z.boolean().default(false),
     featured: z.boolean().default(false),
+    rating: z.number().min(0).max(10).optional(),
     faqs: z.array(z.object({ q: z.string(), a: z.string() })).optional(),
     cta: z.object({
       label: z.string(),
