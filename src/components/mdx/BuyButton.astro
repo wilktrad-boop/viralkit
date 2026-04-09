@@ -1,14 +1,16 @@
 ---
 interface Props {
   label: string;
-  url: string;
+  url?: string;
+  href?: string;
   note?: string;
 }
-const { label, url, note } = Astro.props;
+const { label, url, href, note } = Astro.props;
+const link = url ?? href;
 ---
 <div class="not-prose my-6">
   <a
-    href={url}
+    href={link}
     target="_blank"
     rel="nofollow noopener sponsored"
     class="inline-block rounded-xl bg-violet-600 px-6 py-3 font-semibold text-white hover:bg-violet-700 transition-colors shadow-sm shadow-violet-200"
