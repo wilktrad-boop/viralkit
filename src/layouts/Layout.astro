@@ -35,6 +35,7 @@ const canonicalURL = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
     {jsonLd && jsonLd.map((schema) => (
       <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     ))}
+    <script src="https://app.rybbit.io/api/script.js" data-site-id="22a4e196d06c" defer></script>
   </head>
   <body class="bg-white text-slate-800 antialiased">
     <Header />
