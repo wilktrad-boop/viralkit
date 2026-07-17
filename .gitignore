@@ -2,3 +2,10 @@ dist/
 node_modules/
 .env
 .DS_Store
+
+# Cache et types generes par Astro (recrees a chaque build)
+.astro/
+
+# Exports Google Search Console et outillage local
+data gsc/
+.claude/
